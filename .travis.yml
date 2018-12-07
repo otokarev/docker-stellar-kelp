@@ -3,7 +3,7 @@ services:
 - docker
 env:
   global:
-  - IMAGE_NAME=otokarev/interstellar-kelp
+  - IMAGE_NAME=otokarev/stellar-kelp
 branches:
   only:
   - master
@@ -11,7 +11,7 @@ branches:
 before_script:
 - if [ -z "$TRAVIS_TAG" ]; then exit 0; fi
 - source .travis/env.sh;
-- if [[ -n "$APP_VERSION" ]]; then sed -i 's/^ENV\s*VERSION.*$/ENV VERSION='horizon-$APP_VERSION'/' $APP_DOCKERFILE; fi
+- if [[ -n "$APP_VERSION" ]]; then sed -i 's/^ENV\s*VERSION.*$/ENV VERSION='$APP_VERSION'/' $APP_DOCKERFILE; fi
 - docker pull "$IMAGE_NAME" || true
 script:
 - docker build --pull --cache-from "$IMAGE_NAME" --tag "$IMAGE_NAME" -f $APP_DOCKERFILE .
